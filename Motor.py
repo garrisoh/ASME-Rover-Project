@@ -20,7 +20,7 @@ def class Motor:
 	DUTY_MAX = 10 # Maximum pulse width as percent of frequency
 	DUTY_ZERO = 7.5 # Motor will stop at this point
 
-	def __init__(self, pin):
+	def __init__(self, pin, invert=False):
 		'''
 		Creates a new motor object attached to the given pin on the Beaglebone.  Pin names
 		are strings indicating either pin set 8 or 9 and the pin number on that set of pins.
@@ -32,6 +32,7 @@ def class Motor:
 		'''
 		# Starts PWM on this instance's pin.  Sets the initial speed/duty cycle to the minimum
 		self.pin = pin
+		self.invert = invert
 		PWM.start(pin, Motor.DUTY_ZERO, Motor.FREQ)
 
 	def get_duty_cycle(self, speed):
@@ -55,6 +56,10 @@ def class Motor:
 		causes full backwards movement, 0 stops the motor, and 1.0 causes full forward
 		movement.
 		'''
+		# Invert the speed value if necessary
+		if self.invert:
+			speed *= -1
+
 		# Get the necessary duty cycle for the speed and set the PWM output to this duty cycle
 		duty_cycle = get_duty_cycle(speed)
 		PWM.set_duty_cycle(self.pin, duty_cycle)
