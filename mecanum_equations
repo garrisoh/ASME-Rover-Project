@@ -1,0 +1,10 @@
+L = x-axis distance from each wheel to the center of gravity
+l = y-axis distance from each wheel to the center of gravity
+v_a = angular velocity
+v_fl, v_fr, v_bl, v_br are velocities of front left, front right, back left, and back right wheels, respecitvely.
+
+
+v_fl = v_x - v_y - (L+l) * v_a
+v_fr = v_x + v_y + (L+l) * v_a
+v_bl = v_x + v_y - (L+l) * v_a
+v_br = v_x - v_y + (L+l) * v_a
